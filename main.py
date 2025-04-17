@@ -1,16 +1,15 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import gymnasium as gym
+import ale_py
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+gym.register_envs(ale_py)
+env = gym.make("ALE/SpaceInvaders-v5", render_mode = "human")
+obs, info = env.reset()
+episode_over = False
 
+while not episode_over:
+    action = env.action_space.sample()
+    obs, reward, terminated, truncated, info = env.step(action)
+    episode_over = terminated or truncated
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+env.close()
